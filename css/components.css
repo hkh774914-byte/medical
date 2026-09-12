@@ -53,6 +53,48 @@
 }
 
 /* --------------------------------------------------------------------------
+   1.1 Page Hero Banner (Subpages)
+   -------------------------------------------------------------------------- */
+.page-hero {
+  padding-block: clamp(40px, 5vw, 64px);
+  background: linear-gradient(180deg, var(--color-brand-100) 0%, var(--color-neutral-50) 100%);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.page-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neutral-600);
+  margin-bottom: var(--space-3);
+}
+
+.page-breadcrumb a {
+  color: var(--color-brand-700);
+  font-weight: 700;
+}
+
+.page-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.page-hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--color-brand-900);
+  line-height: 1.15;
+  margin-bottom: var(--space-2);
+}
+
+.page-hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-neutral-700);
+  max-width: 680px;
+}
+
+/* --------------------------------------------------------------------------
    2. Header & Main Navigation
    -------------------------------------------------------------------------- */
 .site-header {

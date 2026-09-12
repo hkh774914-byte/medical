@@ -81,32 +81,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 3. ScrollSpy Active Link Tracking
+  // 3. Navigation Active Link Detection (Multi-Page + ScrollSpy)
   // --------------------------------------------------------------------------
-  const sections = document.querySelectorAll('section[id]');
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  let isMultiPageActive = false;
 
-  const updateActiveNavLink = () => {
-    const scrollY = window.scrollY + 120;
+  navLinks.forEach((link) => {
+    const linkHref = link.getAttribute('href');
+    if (linkHref) {
+      const linkFile = linkHref.split('#')[0].split('/').pop();
+      if (linkFile && linkFile === currentPath) {
+        link.classList.add('is-active');
+        isMultiPageActive = true;
+      } else {
+        link.classList.remove('is-active');
+      }
+    }
+  });
 
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute('id');
-
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        navLinks.forEach((link) => {
-          if (link.getAttribute('href') === `#${sectionId}`) {
-            link.classList.add('is-active');
-          } else {
-            link.classList.remove('is-active');
+  // If on index.html, optional on-page scroll spy
+  if (currentPath === 'index.html' || currentPath === '') {
+    const sections = document.querySelectorAll('section[id]');
+    if (sections.length > 0) {
+      const updateActiveNavLink = () => {
+        const scrollY = window.scrollY + 120;
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach((link) => {
+              if (link.getAttribute('href') === `#${sectionId}` || link.getAttribute('href') === `index.html#${sectionId}`) {
+                link.classList.add('is-active');
+              }
+            });
           }
         });
-      }
-    });
-  };
-
-  window.addEventListener('scroll', updateActiveNavLink, { passive: true });
-  updateActiveNavLink();
+      };
+      window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+    }
+  }
 
   // --------------------------------------------------------------------------
   // 4. Accessible FAQ Accordion
